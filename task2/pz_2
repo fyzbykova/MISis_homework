@@ -6,83 +6,196 @@
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @base <http://www.semanticweb.org/быковаанна/ontologies/2025/9/untitled-ontology-10/> .
 
-<http://www.semanticweb.org/быковаанна/ontologies/2025/9/untitled-ontology-10> rdf:type owl:Ontology .
+<http://www.semanticweb.org/быковаанна/ontologies/2025/9/untitled-ontology-10> rdf:type owl:Ontology ;
+                                                                                rdfs:comment "Онтология для представления семейных отношений"@ru ;
+                                                                                rdfs:label "Генеалогическая онтология"@ru .
 
 #################################################################
 #    Object Properties
 #################################################################
 
-###  http://www.semanticweb.org/быковаанна/ontologies/2025/9/untitled-ontology-10#Имеет_родителя
-:Имеет_родителя rdf:type owl:ObjectProperty ,
+###  http://www.semanticweb.org/быковаанна/ontologies/2025/9/untitled-ontology-10/имеет_потомка
+:имеет_потомка rdf:type owl:ObjectProperty ;
+               owl:inverseOf :имеет_предка ;
+               rdf:type owl:TransitiveProperty ,
+                        owl:IrreflexiveProperty ;
+               rdfs:domain :Человек ,
+                           [ rdf:type owl:Restriction ;
+                             owl:onProperty :имеет_родителя ;
+                             owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                             owl:onClass :Человек
+                           ] ;
+               rdfs:range :Человек ,
+                          [ rdf:type owl:Restriction ;
+                            owl:onProperty :имеет_родителя ;
+                            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                            owl:onClass :Человек
+                          ] ;
+               rdfs:label "имеет потомка"@ru .
+
+
+###  http://www.semanticweb.org/быковаанна/ontologies/2025/9/untitled-ontology-10/имеет_предка
+:имеет_предка rdf:type owl:ObjectProperty ,
+                       owl:TransitiveProperty ,
+                       owl:IrreflexiveProperty ;
+              rdfs:domain :Человек ,
+                          [ rdf:type owl:Restriction ;
+                            owl:onProperty :имеет_родителя ;
+                            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                            owl:onClass :Человек
+                          ] ;
+              rdfs:range :Человек ,
+                         [ rdf:type owl:Restriction ;
+                           owl:onProperty :имеет_родителя ;
+                           owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                           owl:onClass :Человек
+                         ] ;
+              rdfs:comment "Транзитивное замыкание отношения родительства"@ru ;
+              rdfs:label "имеет предка"@ru .
+
+
+###  http://www.semanticweb.org/быковаанна/ontologies/2025/9/untitled-ontology-10/имеет_родителя
+:имеет_родителя rdf:type owl:ObjectProperty ;
+                rdfs:subPropertyOf :имеет_предка ;
+                rdf:type owl:FunctionalProperty ,
+                         owl:AsymmetricProperty ,
                          owl:IrreflexiveProperty ;
-                rdfs:domain :Человек ;
-                rdfs:range :Человек .
+                rdfs:domain :Человек ,
+                            [ rdf:type owl:Restriction ;
+                              owl:onProperty :имеет_родителя ;
+                              owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                              owl:onClass :Человек
+                            ] ;
+                rdfs:range :Человек ,
+                           [ rdf:type owl:Restriction ;
+                             owl:onProperty :имеет_родителя ;
+                             owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                             owl:onClass :Человек
+                           ] ;
+                rdfs:comment "Связь между человеком и его непосредственным родителем"@ru ;
+                rdfs:label "имеет родителя"@ru .
 
 
-###  http://www.semanticweb.org/быковаанна/ontologies/2025/9/untitled-ontology-10#Является_потомком
-:Является_потомком rdf:type owl:ObjectProperty ;
-                   owl:inverseOf :Является_предком ;
-                   rdfs:domain :Человек ;
-                   rdfs:range :Человек .
+#################################################################
+#    Data properties
+#################################################################
+
+###  http://www.semanticweb.org/быковаанна/ontologies/2025/9/untitled-ontology-10/год_рождения
+:год_рождения rdf:type owl:DatatypeProperty ;
+              rdfs:domain :Человек ,
+                          [ rdf:type owl:Restriction ;
+                            owl:onProperty :имеет_родителя ;
+                            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                            owl:onClass :Человек
+                          ] ;
+              rdfs:range xsd:integer ;
+              rdfs:label "год рождения"@ru .
 
 
-###  http://www.semanticweb.org/быковаанна/ontologies/2025/9/untitled-ontology-10#Является_предком
-:Является_предком rdf:type owl:ObjectProperty ,
-                           owl:TransitiveProperty ;
-                  rdfs:domain :Человек ;
-                  rdfs:range :Человек ;
-                  owl:propertyChainAxiom ( :Имеет_родителя
-                                         ) ,
-                                         ( :Имеет_родителя
-                                           :Является_предком
-                                         ) .
+###  http://www.semanticweb.org/быковаанна/ontologies/2025/9/untitled-ontology-10/имя
+:имя rdf:type owl:DatatypeProperty ;
+     rdfs:domain :Человек ,
+                 [ rdf:type owl:Restriction ;
+                   owl:onProperty :имеет_родителя ;
+                   owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                   owl:onClass :Человек
+                 ] ;
+     rdfs:range xsd:string ;
+     rdfs:label "имя"@ru .
 
 
 #################################################################
 #    Classes
 #################################################################
 
-###  http://www.semanticweb.org/быковаанна/ontologies/2025/9/untitled-ontology-10#Человек
-:Человек rdf:type owl:Class .
+###  http://www.semanticweb.org/быковаанна/ontologies/2025/9/untitled-ontology-10/Человек
+:Человек rdf:type owl:Class ;
+         rdfs:subClassOf [ rdf:type owl:Restriction ;
+                           owl:onProperty :имеет_родителя ;
+                           owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                           owl:onClass :Человек
+                         ] ;
+         rdfs:label "человек"@ru .
 
 
 #################################################################
 #    Individuals
 #################################################################
 
-###  http://www.semanticweb.org/быковаанна/ontologies/2025/9/untitled-ontology-10#Анна
+###  http://www.semanticweb.org/быковаанна/ontologies/2025/9/untitled-ontology-10/Анна
 :Анна rdf:type owl:NamedIndividual ,
-               :Человек ;
-      :Является_потомком :Иван ,
-                         :Марья ,
-                         :Петр .
+               :Человек ,
+               [ rdf:type owl:Restriction ;
+                 owl:onProperty :имеет_родителя ;
+                 owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                 owl:onClass :Человек
+               ] ;
+      :имеет_предка :Иван ,
+                    :Марья ,
+                    :Петр ;
+      :имеет_родителя :Иван ;
+      :год_рождения 2010 ;
+      :имя "Анна" .
 
 
-###  http://www.semanticweb.org/быковаанна/ontologies/2025/9/untitled-ontology-10#Иван
+###  http://www.semanticweb.org/быковаанна/ontologies/2025/9/untitled-ontology-10/Иван
 :Иван rdf:type owl:NamedIndividual ,
-               :Человек ;
-      :Имеет_родителя :Марья ;
-      :Является_предком :Анна ,
-                        :Марья ,
-                        :Петр .
+               :Человек ,
+               [ rdf:type owl:Restriction ;
+                 owl:onProperty :имеет_родителя ;
+                 owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                 owl:onClass :Человек
+               ] ;
+      :имеет_потомка :Анна ;
+      :имеет_предка :Марья ,
+                    :Петр ;
+      :имеет_родителя :Марья ;
+      :год_рождения 1985 ;
+      :имя "Иван" .
 
 
-###  http://www.semanticweb.org/быковаанна/ontologies/2025/9/untitled-ontology-10#Марья
+###  http://www.semanticweb.org/быковаанна/ontologies/2025/9/untitled-ontology-10/Марья
 :Марья rdf:type owl:NamedIndividual ,
-                :Человек ;
-       :Имеет_родителя :Петр ;
-       :Является_потомком :Иван ;
-       :Является_предком :Анна ,
-                         :Петр .
+                :Человек ,
+                [ rdf:type owl:Restriction ;
+                  owl:onProperty :имеет_родителя ;
+                  owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                  owl:onClass :Человек
+                ] ;
+       :имеет_потомка :Анна ,
+                      :Иван ;
+       :имеет_предка :Петр ;
+       :имеет_родителя :Петр ;
+       :год_рождения 1965 ;
+       :имя "Марья" .
 
 
-###  http://www.semanticweb.org/быковаанна/ontologies/2025/9/untitled-ontology-10#Петр
+###  http://www.semanticweb.org/быковаанна/ontologies/2025/9/untitled-ontology-10/Петр
 :Петр rdf:type owl:NamedIndividual ,
-               :Человек ;
-      :Имеет_родителя :Анна ;
-      :Является_потомком :Иван ,
-                         :Марья ;
-      :Является_предком :Анна .
+               :Человек ,
+               [ rdf:type owl:Restriction ;
+                 owl:onProperty :имеет_родителя ;
+                 owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                 owl:onClass :Человек
+               ] ;
+      :имеет_потомка :Анна ,
+                     :Иван ,
+                     :Марья ;
+      :год_рождения 1940 ;
+      :имя "Петр" .
+
+
+#################################################################
+#    General axioms
+#################################################################
+
+[ rdf:type owl:AllDifferent ;
+  owl:distinctMembers ( :Анна
+                        :Иван
+                        :Марья
+                        :Петр
+                      )
+] .
 
 
 ###  Generated by the OWL API (version 4.5.29.2024-05-13T12:11:03Z) https://github.com/owlcs/owlapi
