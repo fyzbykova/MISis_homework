@@ -21,45 +21,141 @@
 #################################################################
 
 ###  http://www.semanticweb.org/быковаанна/ontologies/2025/9/untitled-ontology-9#Берет_в_аренду
-:Берет_в_аренду rdf:type owl:ObjectProperty .
+:Берет_в_аренду rdf:type owl:ObjectProperty ;
+                rdfs:domain :Читатель ;
+                rdfs:range :Книга ;
+                owl:inverseOf :Арендуется_у ;
+                rdfs:label "берет в аренду"@ru .
 
+###  http://www.semanticweb.org/быковаанна/ontologies/2025/9/untitled-ontology-9#Арендуется_у
+:Арендуется_у rdf:type owl:ObjectProperty ;
+              rdfs:domain :Книга ;
+              rdfs:range :Читатель ;
+              rdfs:label "арендуется у"@ru .
 
 ###  http://www.semanticweb.org/быковаанна/ontologies/2025/9/untitled-ontology-9#Относится_к_жанру
-:Относится_к_жанру rdf:type owl:ObjectProperty .
-
+:Относится_к_жанру rdf:type owl:ObjectProperty ;
+                   rdfs:domain :Книга ;
+                   rdfs:range :Жанр ;
+                   rdfs:label "относится к жанру"@ru .
 
 ###  http://www.semanticweb.org/быковаанна/ontologies/2025/9/untitled-ontology-9#Работает_в_библиотеке
-:Работает_в_библиотеке rdf:type owl:ObjectProperty .
-
+:Работает_в_библиотеке rdf:type owl:ObjectProperty ;
+                       rdfs:domain :Библиотекарь ;
+                       rdfs:range :Библиотека ;
+                       rdfs:label "работает в библиотеке"@ru .
 
 ###  http://www.semanticweb.org/быковаанна/ontologies/2025/9/untitled-ontology-9#Рекомендует
-:Рекомендует rdf:type owl:ObjectProperty .
+:Рекомендует rdf:type owl:ObjectProperty ;
+            rdfs:domain :Библиотекарь ;
+            rdfs:range :Книга ;
+            owl:inverseOf :Рекомендуется_библиотекарем ;
+            rdfs:label "рекомендует"@ru .
+
+###  http://www.semanticweb.org/быковаанна/ontologies/2025/9/untitled-ontology-9#Рекомендуется_библиотекарем
+:Рекомендуется_библиотекарем rdf:type owl:ObjectProperty ;
+                            rdfs:domain :Книга ;
+                            rdfs:range :Библиотекарь ;
+                            rdfs:label "рекомендуется библиотекарем"@ru .
+
+###  http://www.semanticweb.org/быковаанна/ontologies/2025/9/untitled-ontology-9#Находится_в_библиотеке
+:Находится_в_библиотеке rdf:type owl:ObjectProperty ;
+                        rdfs:domain :Книга ;
+                        rdfs:range :Библиотека ;
+                        owl:inverseOf :Содержит_книгу ;
+                        rdfs:label "находится в библиотеке"@ru .
+
+###  http://www.semanticweb.org/быковаанна/ontologies/2025/9/untitled-ontology-9#Содержит_книгу
+:Содержит_книгу rdf:type owl:ObjectProperty ;
+                rdfs:domain :Библиотека ;
+                rdfs:range :Книга ;
+                rdfs:label "содержит книгу"@ru .
+
+
+#################################################################
+#    Data Properties
+#################################################################
+
+###  http://www.semanticweb.org/быковаанна/ontologies/2025/9/untitled-ontology-9#год_издания
+:год_издания rdf:type owl:DatatypeProperty ;
+             rdfs:domain :Книга ;
+             rdfs:range xsd:integer ;
+             rdfs:label "год издания"@ru .
+
+###  http://www.semanticweb.org/быковаанна/ontologies/2025/9/untitled-ontology-9#дата_аренды
+:дата_аренды rdf:type owl:DatatypeProperty ;
+             rdfs:domain :Берет_в_аренду ;
+             rdfs:range xsd:date ;
+             rdfs:label "дата аренды"@ru .
+
+###  http://www.semanticweb.org/быковаанна/ontologies/2025/9/untitled-ontology-9#срок_аренды
+:срок_аренды rdf:type owl:DatatypeProperty ;
+             rdfs:domain :Берет_в_аренду ;
+             rdfs:range xsd:integer ;
+             rdfs:label "срок аренды в днях"@ru .
+
+###  http://www.semanticweb.org/быковаанна/ontologies/2025/9/untitled-ontology-9#id_читательского_билета
+:id_читательского_билета rdf:type owl:DatatypeProperty ;
+                         rdfs:domain :Читатель ;
+                         rdfs:range xsd:string ;
+                         rdfs:label "ID читательского билета"@ru .
+
+###  http://www.semanticweb.org/быковаанна/ontologies/2025/9/untitled-ontology-9#id_сотрудника
+:id_сотрудника rdf:type owl:DatatypeProperty ;
+               rdfs:domain :Библиотекарь ;
+               rdfs:range xsd:string ;
+               rdfs:label "ID сотрудника"@ru .
 
 
 #################################################################
 #    Classes
 #################################################################
 
+###  http://www.semanticweb.org/быковаанна/ontologies/2025/9/untitled-ontology-9#Библиотека
+:Библиотека rdf:type owl:Class ;
+            rdfs:label "библиотека"@ru .
+
 ###  http://www.semanticweb.org/быковаанна/ontologies/2025/9/untitled-ontology-9#Библиотекарь
 :Библиотекарь rdf:type owl:Class ;
-              rdfs:subClassOf :Человек .
-
+              rdfs:subClassOf :Человек ,
+                              [ rdf:type owl:Restriction ;
+                                owl:onProperty :Работает_в_библиотеке ;
+                                owl:someValuesFrom :Библиотека
+                              ] ,
+                              [ rdf:type owl:Restriction ;
+                                owl:onProperty :Рекомендует ;
+                                owl:someValuesFrom :Книга
+                              ] ;
+              rdfs:label "библиотекарь"@ru .
 
 ###  http://www.semanticweb.org/быковаанна/ontologies/2025/9/untitled-ontology-9#Жанр
-:Жанр rdf:type owl:Class .
-
+:Жанр rdf:type owl:Class ;
+      rdfs:label "жанр"@ru .
 
 ###  http://www.semanticweb.org/быковаанна/ontologies/2025/9/untitled-ontology-9#Книга
-:Книга rdf:type owl:Class .
-
+:Книга rdf:type owl:Class ;
+       rdfs:subClassOf [ rdf:type owl:Restriction ;
+                         owl:onProperty :Относится_к_жанру ;
+                         owl:someValuesFrom :Жанр
+                       ] ,
+                       [ rdf:type owl:Restriction ;
+                         owl:onProperty :Находится_в_библиотеке ;
+                         owl:someValuesFrom :Библиотека
+                       ] ;
+       rdfs:label "книга"@ru .
 
 ###  http://www.semanticweb.org/быковаанна/ontologies/2025/9/untitled-ontology-9#Человек
-:Человек rdf:type owl:Class .
-
+:Человек rdf:type owl:Class ;
+         rdfs:label "человек"@ru .
 
 ###  http://www.semanticweb.org/быковаанна/ontologies/2025/9/untitled-ontology-9#Читатель
 :Читатель rdf:type owl:Class ;
-          rdfs:subClassOf :Человек .
+          rdfs:subClassOf :Человек ,
+                          [ rdf:type owl:Restriction ;
+                            owl:onProperty :Берет_в_аренду ;
+                            owl:someValuesFrom :Книга
+                          ] ;
+          rdfs:label "читатель"@ru .
 
 
 #################################################################
@@ -69,87 +165,158 @@
 ###  http://www.semanticweb.org/быковаанна/ontologies/2025/9/untitled-ontology-9#Алексей_Козлов
 :Алексей_Козлов rdf:type owl:NamedIndividual ,
                          :Человек ,
-                         :Читатель .
-
+                         :Читатель ;
+                :id_читательского_билета "ЧБ-001" .
 
 ###  http://www.semanticweb.org/быковаанна/ontologies/2025/9/untitled-ontology-9#Анна_Ивановна
 :Анна_Ивановна rdf:type owl:NamedIndividual ,
                         :Библиотекарь ,
                         :Человек ;
-               :Рекомендует :Мастер_и_Маргарита .
-
+               :Рекомендует :Мастер_и_Маргарита ;
+               :Работает_в_библиотеке :Центральная_библиотека ;
+               :id_сотрудника "С-001" .
 
 ###  http://www.semanticweb.org/быковаанна/ontologies/2025/9/untitled-ontology-9#Детектив
 :Детектив rdf:type owl:NamedIndividual ,
                    :Жанр .
 
-
 ###  http://www.semanticweb.org/быковаанна/ontologies/2025/9/untitled-ontology-9#Дмитрий_Смирнов
 :Дмитрий_Смирнов rdf:type owl:NamedIndividual ,
                           :Библиотекарь ,
-                          :Человек .
-
+                          :Человек ;
+                 :Работает_в_библиотеке :Центральная_библиотека ;
+                 :id_сотрудника "С-002" .
 
 ###  http://www.semanticweb.org/быковаанна/ontologies/2025/9/untitled-ontology-9#Иван_Петров
 :Иван_Петров rdf:type owl:NamedIndividual ,
                       :Человек ,
                       :Читатель ;
-             :Берет_в_аренду :Мастер_и_Маргарита .
-
+             :Берет_в_аренду :Мастер_и_Маргарита ;
+             :id_читательского_билета "ЧБ-002" .
 
 ###  http://www.semanticweb.org/быковаанна/ontologies/2025/9/untitled-ontology-9#Мария_Сидорова
 :Мария_Сидорова rdf:type owl:NamedIndividual ,
                          :Человек ,
                          :Читатель ;
-                :Берет_в_аренду :Преступление_и_наказание .
-
+                :Берет_в_аренду :Преступление_и_наказание ;
+                :id_читательского_билета "ЧБ-003" .
 
 ###  http://www.semanticweb.org/быковаанна/ontologies/2025/9/untitled-ontology-9#Мастер_и_Маргарита
 :Мастер_и_Маргарита rdf:type owl:NamedIndividual ,
                              :Книга ;
-                    :Относится_к_жанру :Роман .
-
+                    :Относится_к_жанру :Роман ;
+                    :год_издания 1966 ;
+                    :Находится_в_библиотеке :Центральная_библиотека .
 
 ###  http://www.semanticweb.org/быковаанна/ontologies/2025/9/untitled-ontology-9#Преступление_и_наказание
 :Преступление_и_наказание rdf:type owl:NamedIndividual ,
                                    :Книга ;
-                          :Относится_к_жанру :Роман .
-
+                          :Относится_к_жанру :Роман ;
+                          :год_издания 1866 ;
+                          :Находится_в_библиотеке :Центральная_библиотека .
 
 ###  http://www.semanticweb.org/быковаанна/ontologies/2025/9/untitled-ontology-9#Роман
 :Роман rdf:type owl:NamedIndividual ,
                 :Жанр .
 
-
 ###  http://www.semanticweb.org/быковаанна/ontologies/2025/9/untitled-ontology-9#Фантастика
 :Фантастика rdf:type owl:NamedIndividual ,
                      :Жанр .
 
+###  http://www.semanticweb.org/быковаанна/ontologies/2025/9/untitled-ontology-9#Центральная_библиотека
+:Центральная_библиотека rdf:type owl:NamedIndividual ,
+                                 :Библиотека ;
+                        :Содержит_книгу :Мастер_и_Маргарита ,
+                                        :Преступление_и_наказание .
+
 
 #################################################################
-#    Rules
+#    General axioms
+#################################################################
+
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( :Библиотекарь
+                :Читатель
+                :Библиотека
+                :Книга
+                :Жанр
+              )
+] .
+
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( :Библиотекарь
+                :Читатель
+              )
+] .
+
+
+#################################################################
+#    Rules (Improved)
 #################################################################
 
 :x rdf:type <http://www.w3.org/2003/11/swrl#Variable> .
+:y rdf:type <http://www.w3.org/2003/11/swrl#Variable> .
+:z rdf:type <http://www.w3.org/2003/11/swrl#Variable> .
 
+# Правило: Если читатель берет книгу, а библиотекарь рекомендует эту книгу,
+# то создается связь "успешная рекомендация"
 [ <http://swrl.stanford.edu/ontologies/3.3/swrla.owl#isRuleEnabled> "true"^^xsd:boolean ;
-   rdfs:comment "" ;
-   rdfs:label "S1" ;
+   rdfs:comment "Правило успешной рекомендации" ;
+   rdfs:label "УспешнаяРекомендация" ;
    rdf:type <http://www.w3.org/2003/11/swrl#Imp> ;
-   <http://www.w3.org/2003/11/swrl#body> [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
-                                           rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#ClassAtom> ;
-                                                       <http://www.w3.org/2003/11/swrl#classPredicate> :Библиотекарь ;
-                                                       <http://www.w3.org/2003/11/swrl#argument1> :x
-                                                     ] ;
-                                           rdf:rest rdf:nil
-                                         ] ;
-   <http://www.w3.org/2003/11/swrl#head> [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
-                                           rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#ClassAtom> ;
-                                                       <http://www.w3.org/2003/11/swrl#classPredicate> :Человек ;
-                                                       <http://www.w3.org/2003/11/swrl#argument1> :x
-                                                     ] ;
-                                           rdf:rest rdf:nil
-                                         ]
- ] .
+   <http://www.w3.org/2003/11/swrl#body> [
+     rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+     rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#ClassAtom> ;
+                 <http://www.w3.org/2003/11/swrl#classPredicate> :Читатель ;
+                 <http://www.w3.org/2003/11/swrl#argument1> :x
+               ] ;
+     rdf:rest [
+       rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+       rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#ClassAtom> ;
+                   <http://www.w3.org/2003/11/swrl#classPredicate> :Библиотекарь ;
+                   <http://www.w3.org/2003/11/swrl#argument1> :y
+                 ] ;
+       rdf:rest [
+         rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+         rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#ClassAtom> ;
+                     <http://www.w3.org/2003/11/swrl#classPredicate> :Книга ;
+                     <http://www.w3.org/2003/11/swrl#argument1> :z
+                   ] ;
+         rdf:rest [
+           rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+           rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+                       <http://www.w3.org/2003/11/swrl#propertyPredicate> :Берет_в_аренду ;
+                       <http://www.w3.org/2003/11/swrl#argument1> :x ;
+                       <http://www.w3.org/2003/11/swrl#argument2> :z
+                     ] ;
+           rdf:rest [
+             rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+             rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+                         <http://www.w3.org/2003/11/swrl#propertyPredicate> :Рекомендует ;
+                         <http://www.w3.org/2003/11/swrl#argument1> :y ;
+                         <http://www.w3.org/2003/11/swrl#argument2> :z
+                       ] ;
+             rdf:rest rdf:nil
+           ]
+         ]
+       ]
+     ]
+   ] ;
+   <http://www.w3.org/2003/11/swrl#head> [
+     rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+     rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+                 <http://www.w3.org/2003/11/swrl#propertyPredicate> :Успешная_рекомендация ;
+                 <http://www.w3.org/2003/11/swrl#argument1> :y ;
+                 <http://www.w3.org/2003/11/swrl#argument2> :x
+               ] ;
+     rdf:rest rdf:nil
+   ]
+] .
+
+###  http://www.semanticweb.org/быковаанна/ontologies/2025/9/untitled-ontology-9#Успешная_рекомендация
+:Успешная_рекомендация rdf:type owl:ObjectProperty ;
+                       rdfs:domain :Библиотекарь ;
+                       rdfs:range :Читатель ;
+                       rdfs:label "успешная рекомендация"@ru .
 
 ###  Generated by the OWL API (version 4.5.29.2024-05-13T12:11:03Z) https://github.com/owlcs/owlapi
