@@ -1,0 +1,256 @@
+@prefix : <http://www.semanticweb.org/быковаанна/ontologies/2025/9/smart-home-ontology/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@base <http://www.semanticweb.org/быковаанна/ontologies/2025/9/smart-home-ontology/> .
+
+<http://www.semanticweb.org/быковаанна/ontologies/2025/9/smart-home-ontology> rdf:type owl:Ontology ;
+                                                                               rdfs:comment "Онтология для автоматической классификации устройств по энергоэффективности"@ru ;
+                                                                               rdfs:label "Онтология умного дома с управлением энергопотреблением"@ru .
+
+#################################################################
+#    Annotation properties
+#################################################################
+
+###  http://swrl.stanford.edu/ontologies/3.3/swrla.owl#isRuleEnabled
+<http://swrl.stanford.edu/ontologies/3.3/swrla.owl#isRuleEnabled> rdf:type owl:AnnotationProperty .
+
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  http://www.semanticweb.org/быковаанна/ontologies/2025/9/smart-home-ontology/имеет_тип
+:имеет_тип rdf:type owl:ObjectProperty ;
+           rdfs:domain :Устройство ;
+           rdfs:range :ТипУстройства ;
+           rdfs:label "имеет тип"@ru .
+
+
+###  http://www.semanticweb.org/быковаанна/ontologies/2025/9/smart-home-ontology/используется_в
+:используется_в rdf:type owl:ObjectProperty ;
+                rdfs:domain :Устройство ;
+                rdfs:range :РежимИспользования ;
+                rdfs:label "используется в"@ru .
+
+
+###  http://www.semanticweb.org/быковаанна/ontologies/2025/9/smart-home-ontology/потребляет_энергию
+:потребляет_энергию rdf:type owl:ObjectProperty ;
+                    rdfs:domain :Устройство ;
+                    rdfs:range :УровеньПотребления ;
+                    rdfs:label "потребляет энергию"@ru .
+
+
+###  http://www.semanticweb.org/быковаанна/ontologies/2025/9/smart-home-ontology/расположен_в
+:расположен_в rdf:type owl:ObjectProperty ;
+              rdfs:domain :Устройство ;
+              rdfs:range :Помещение ;
+              rdfs:label "расположен в"@ru .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  http://www.semanticweb.org/быковаанна/ontologies/2025/9/smart-home-ontology/мощность_вт
+:мощность_вт rdf:type owl:DatatypeProperty ;
+             rdfs:domain :Устройство ;
+             rdfs:range xsd:integer ;
+             rdfs:label "мощность в ваттах"@ru .
+
+
+###  http://www.semanticweb.org/быковаанна/ontologies/2025/9/smart-home-ontology/стоимость_электроэнергии
+:стоимость_электроэнергии rdf:type owl:DatatypeProperty ;
+                          rdfs:domain :Энергопотребление ;
+                          rdfs:range xsd:decimal ;
+                          rdfs:label "стоимость электроэнергии"@ru .
+
+
+###  http://www.semanticweb.org/быковаанна/ontologies/2025/9/smart-home-ontology/часы_работы_в_день
+:часы_работы_в_день rdf:type owl:DatatypeProperty ;
+                    rdfs:domain :Устройство ;
+                    rdfs:range xsd:decimal ;
+                    rdfs:label "часы работы в день"@ru .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://www.semanticweb.org/быковаанна/ontologies/2025/9/smart-home-ontology/Помещение
+:Помещение rdf:type owl:Class ;
+           rdfs:label "помещение"@ru .
+
+
+###  http://www.semanticweb.org/быковаанна/ontologies/2025/9/smart-home-ontology/РежимИспользования
+:РежимИспользования rdf:type owl:Class ;
+                    rdfs:label "режим использования"@ru .
+
+
+###  http://www.semanticweb.org/быковаанна/ontologies/2025/9/smart-home-ontology/ТипУстройства
+:ТипУстройства rdf:type owl:Class ;
+               rdfs:label "тип устройства"@ru .
+
+
+###  http://www.semanticweb.org/быковаанна/ontologies/2025/9/smart-home-ontology/УровеньПотребления
+:УровеньПотребления rdf:type owl:Class ;
+                    rdfs:label "уровень потребления"@ru .
+
+
+###  http://www.semanticweb.org/быковаанна/ontologies/2025/9/smart-home-ontology/Устройство
+:Устройство rdf:type owl:Class ;
+            rdfs:label "устройство"@ru .
+
+
+###  http://www.semanticweb.org/быковаанна/ontologies/2025/9/smart-home-ontology/ЭнергоНеэффективноеУстройство
+:ЭнергоНеэффективноеУстройство rdf:type owl:Class ;
+                               rdfs:comment "Класс для классификации устройств с высоким энергопотреблением"@ru ;
+                               rdfs:label "энерго неэффективное устройство"@ru .
+
+
+###  http://www.semanticweb.org/быковаанна/ontologies/2025/9/smart-home-ontology/Энергопотребление
+:Энергопотребление rdf:type owl:Class ;
+                   rdfs:label "энергопотребление"@ru .
+
+
+#################################################################
+#    Individuals
+#################################################################
+
+###  http://www.semanticweb.org/быковаанна/ontologies/2025/9/smart-home-ontology/БытоваяТехника
+:БытоваяТехника rdf:type owl:NamedIndividual ,
+                         :ТипУстройства ;
+                rdfs:label "бытовая техника"@ru .
+
+
+###  http://www.semanticweb.org/быковаанна/ontologies/2025/9/smart-home-ontology/ВечернийРежим
+:ВечернийРежим rdf:type owl:NamedIndividual ,
+                        :РежимИспользования ;
+               rdfs:label "вечерний режим"@ru .
+
+
+###  http://www.semanticweb.org/быковаанна/ontologies/2025/9/smart-home-ontology/ВысокоеПотребление
+:ВысокоеПотребление rdf:type owl:NamedIndividual ,
+                             :УровеньПотребления ;
+                    rdfs:label "высокое потребление"@ru .
+
+
+###  http://www.semanticweb.org/быковаанна/ontologies/2025/9/smart-home-ontology/Гостиная
+:Гостиная rdf:type owl:NamedIndividual ,
+                   :Помещение ;
+          rdfs:label "гостиная"@ru .
+
+
+###  http://www.semanticweb.org/быковаанна/ontologies/2025/9/smart-home-ontology/Игровой_Компьютер
+:Игровой_Компьютер rdf:type owl:NamedIndividual ,
+                            :Устройство ;
+                   :имеет_тип :Электроника ;
+                   :используется_в :РабочийРежим ;
+                   :расположен_в :Кабинет ;
+                   :мощность_вт 800 ;
+                   :часы_работы_в_день 6.0 ;
+                   rdfs:label "Игровой компьютер"@ru .
+
+
+###  http://www.semanticweb.org/быковаанна/ontologies/2025/9/smart-home-ontology/Кабинет
+:Кабинет rdf:type owl:NamedIndividual ,
+                  :Помещение ;
+         rdfs:label "кабинет"@ru .
+
+
+###  http://www.semanticweb.org/быковаанна/ontologies/2025/9/smart-home-ontology/КлиматическаяТехника
+:КлиматическаяТехника rdf:type owl:NamedIndividual ,
+                               :ТипУстройства ;
+                      rdfs:label "климатическая техника"@ru .
+
+
+###  http://www.semanticweb.org/быковаанна/ontologies/2025/9/smart-home-ontology/Кондиционер_LG
+:Кондиционер_LG rdf:type owl:NamedIndividual ,
+                         :Устройство ;
+                :имеет_тип :КлиматическаяТехника ;
+                :используется_в :СезонныйРежим ;
+                :расположен_в :Гостиная ;
+                :мощность_вт 2000 ;
+                :часы_работы_в_день 8.0 ;
+                rdfs:label "Кондиционер LG"@ru .
+
+
+###  http://www.semanticweb.org/быковаанна/ontologies/2025/9/smart-home-ontology/Кухня
+:Кухня rdf:type owl:NamedIndividual ,
+                :Помещение ;
+       rdfs:label "кухня"@ru .
+
+
+###  http://www.semanticweb.org/быковаанна/ontologies/2025/9/smart-home-ontology/НизкоеПотребление
+:НизкоеПотребление rdf:type owl:NamedIndividual ,
+                            :УровеньПотребления ;
+                   rdfs:label "низкое потребление"@ru .
+
+
+###  http://www.semanticweb.org/быковаанна/ontologies/2025/9/smart-home-ontology/Освещение
+:Освещение rdf:type owl:NamedIndividual ,
+                    :ТипУстройства ;
+           rdfs:label "освещение"@ru .
+
+
+###  http://www.semanticweb.org/быковаанна/ontologies/2025/9/smart-home-ontology/ПостоянныйРежим
+:ПостоянныйРежим rdf:type owl:NamedIndividual ,
+                          :РежимИспользования ;
+                 rdfs:label "постоянный режим"@ru .
+
+
+###  http://www.semanticweb.org/быковаанна/ontologies/2025/9/smart-home-ontology/РабочийРежим
+:РабочийРежим rdf:type owl:NamedIndividual ,
+                       :РежимИспользования ;
+              rdfs:label "рабочий режим"@ru .
+
+
+###  http://www.semanticweb.org/быковаанна/ontologies/2025/9/smart-home-ontology/Светодиодная_Лампа
+:Светодиодная_Лампа rdf:type owl:NamedIndividual ,
+                             :Устройство ;
+                    :имеет_тип :Освещение ;
+                    :используется_в :ВечернийРежим ;
+                    :расположен_в :Спальня ;
+                    :мощность_вт 10 ;
+                    :часы_работы_в_день 5.0 ;
+                    rdfs:label "Светодиодная лампа"@ru .
+
+
+###  http://www.semanticweb.org/быковаанна/ontologies/2025/9/smart-home-ontology/СезонныйРежим
+:СезонныйРежим rdf:type owl:NamedIndividual ,
+                        :РежимИспользования ;
+               rdfs:label "сезонный режим"@ru .
+
+
+###  http://www.semanticweb.org/быковаанна/ontologies/2025/9/smart-home-ontology/Спальня
+:Спальня rdf:type owl:NamedIndividual ,
+                  :Помещение ;
+         rdfs:label "спальня"@ru .
+
+
+###  http://www.semanticweb.org/быковаанна/ontologies/2025/9/smart-home-ontology/СреднееПотребление
+:СреднееПотребление rdf:type owl:NamedIndividual ,
+                             :УровеньПотребления ;
+                    rdfs:label "среднее потребление"@ru .
+
+
+###  http://www.semanticweb.org/быковаанна/ontologies/2025/9/smart-home-ontology/Холодильник_Самсунг
+:Холодильник_Самсунг rdf:type owl:NamedIndividual ,
+                              :Устройство ;
+                     :имеет_тип :БытоваяТехника ;
+                     :используется_в :ПостоянныйРежим ;
+                     :расположен_в :Кухня ;
+                     :мощность_вт 150 ;
+                     :часы_работы_в_день 24.0 ;
+                     rdfs:label "Холодильник Самсунг"@ru .
+
+
+###  http://www.semanticweb.org/быковаанна/ontologies/2025/9/smart-home-ontology/Электроника
+:Электроника rdf:type owl:NamedIndividual ,
+                      :ТипУстройства ;
+             rdfs:label "электроника"@ru .
+
+
+###  Generated by the OWL API (version 4.5.29.2024-05-13T12:11:03Z) https://github.com/owlcs/owlapi
