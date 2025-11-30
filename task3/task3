@@ -36,13 +36,6 @@
                 rdfs:label "используется в"@ru .
 
 
-###  http://www.semanticweb.org/быковаанна/ontologies/2025/9/smart-home-ontology/потребляет_энергию
-:потребляет_энергию rdf:type owl:ObjectProperty ;
-                    rdfs:domain :Устройство ;
-                    rdfs:range :УровеньПотребления ;
-                    rdfs:label "потребляет энергию"@ru .
-
-
 ###  http://www.semanticweb.org/быковаанна/ontologies/2025/9/smart-home-ontology/расположен_в
 :расположен_в rdf:type owl:ObjectProperty ;
               rdfs:domain :Устройство ;
@@ -59,13 +52,6 @@
              rdfs:domain :Устройство ;
              rdfs:range xsd:integer ;
              rdfs:label "мощность в ваттах"@ru .
-
-
-###  http://www.semanticweb.org/быковаанна/ontologies/2025/9/smart-home-ontology/стоимость_электроэнергии
-:стоимость_электроэнергии rdf:type owl:DatatypeProperty ;
-                          rdfs:domain :Энергопотребление ;
-                          rdfs:range xsd:decimal ;
-                          rdfs:label "стоимость электроэнергии"@ru .
 
 
 ###  http://www.semanticweb.org/быковаанна/ontologies/2025/9/smart-home-ontology/часы_работы_в_день
@@ -94,11 +80,6 @@
                rdfs:label "тип устройства"@ru .
 
 
-###  http://www.semanticweb.org/быковаанна/ontologies/2025/9/smart-home-ontology/УровеньПотребления
-:УровеньПотребления rdf:type owl:Class ;
-                    rdfs:label "уровень потребления"@ru .
-
-
 ###  http://www.semanticweb.org/быковаанна/ontologies/2025/9/smart-home-ontology/Устройство
 :Устройство rdf:type owl:Class ;
             rdfs:label "устройство"@ru .
@@ -108,11 +89,6 @@
 :ЭнергоНеэффективноеУстройство rdf:type owl:Class ;
                                rdfs:comment "Класс для классификации устройств с высоким энергопотреблением"@ru ;
                                rdfs:label "энерго неэффективное устройство"@ru .
-
-
-###  http://www.semanticweb.org/быковаанна/ontologies/2025/9/smart-home-ontology/Энергопотребление
-:Энергопотребление rdf:type owl:Class ;
-                   rdfs:label "энергопотребление"@ru .
 
 
 #################################################################
@@ -131,12 +107,6 @@
                rdfs:label "вечерний режим"@ru .
 
 
-###  http://www.semanticweb.org/быковаанна/ontologies/2025/9/smart-home-ontology/ВысокоеПотребление
-:ВысокоеПотребление rdf:type owl:NamedIndividual ,
-                             :УровеньПотребления ;
-                    rdfs:label "высокое потребление"@ru .
-
-
 ###  http://www.semanticweb.org/быковаанна/ontologies/2025/9/smart-home-ontology/Гостиная
 :Гостиная rdf:type owl:NamedIndividual ,
                    :Помещение ;
@@ -145,7 +115,8 @@
 
 ###  http://www.semanticweb.org/быковаанна/ontologies/2025/9/smart-home-ontology/Игровой_Компьютер
 :Игровой_Компьютер rdf:type owl:NamedIndividual ,
-                            :Устройство ;
+                            :Устройство ,
+                            :ЭнергоНеэффективноеУстройство ;
                    :имеет_тип :Электроника ;
                    :используется_в :РабочийРежим ;
                    :расположен_в :Кабинет ;
@@ -168,7 +139,8 @@
 
 ###  http://www.semanticweb.org/быковаанна/ontologies/2025/9/smart-home-ontology/Кондиционер_LG
 :Кондиционер_LG rdf:type owl:NamedIndividual ,
-                         :Устройство ;
+                         :Устройство ,
+                         :ЭнергоНеэффективноеУстройство ;
                 :имеет_тип :КлиматическаяТехника ;
                 :используется_в :СезонныйРежим ;
                 :расположен_в :Гостиная ;
@@ -181,12 +153,6 @@
 :Кухня rdf:type owl:NamedIndividual ,
                 :Помещение ;
        rdfs:label "кухня"@ru .
-
-
-###  http://www.semanticweb.org/быковаанна/ontologies/2025/9/smart-home-ontology/НизкоеПотребление
-:НизкоеПотребление rdf:type owl:NamedIndividual ,
-                            :УровеньПотребления ;
-                   rdfs:label "низкое потребление"@ru .
 
 
 ###  http://www.semanticweb.org/быковаанна/ontologies/2025/9/smart-home-ontology/Освещение
@@ -230,12 +196,6 @@
          rdfs:label "спальня"@ru .
 
 
-###  http://www.semanticweb.org/быковаанна/ontologies/2025/9/smart-home-ontology/СреднееПотребление
-:СреднееПотребление rdf:type owl:NamedIndividual ,
-                             :УровеньПотребления ;
-                    rdfs:label "среднее потребление"@ru .
-
-
 ###  http://www.semanticweb.org/быковаанна/ontologies/2025/9/smart-home-ontology/Холодильник_Самсунг
 :Холодильник_Самсунг rdf:type owl:NamedIndividual ,
                               :Устройство ;
@@ -252,5 +212,73 @@
                       :ТипУстройства ;
              rdfs:label "электроника"@ru .
 
+
+#################################################################
+#    Rules
+#################################################################
+
+:Устройство_var rdf:type <http://www.w3.org/2003/11/swrl#Variable> .
+
+:Мощность_var rdf:type <http://www.w3.org/2003/11/swrl#Variable> .
+
+:Часы_var rdf:type <http://www.w3.org/2003/11/swrl#Variable> .
+
+[ <http://swrl.stanford.edu/ontologies/3.3/swrla.owl#isRuleEnabled> "true"^^xsd:boolean ;
+   rdfs:comment "Правило классификации энерго-неэффективных устройств: если устройство имеет высокую мощность (>500 Вт) И работает много часов в день (>4 часов), то оно классифицируется как энерго-неэффективное" ;
+   rdfs:label "КлассификацияЭнергоНеэффективныхУстройств" ;
+   rdf:type <http://www.w3.org/2003/11/swrl#Imp> ;
+   <http://www.w3.org/2003/11/swrl#body> [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                           rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#ClassAtom> ;
+                                                       <http://www.w3.org/2003/11/swrl#classPredicate> :Устройство ;
+                                                       <http://www.w3.org/2003/11/swrl#argument1> :Устройство_var
+                                                     ] ;
+                                           rdf:rest [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                                      rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#DatavaluedPropertyAtom> ;
+                                                                  <http://www.w3.org/2003/11/swrl#propertyPredicate> :мощность_вт ;
+                                                                  <http://www.w3.org/2003/11/swrl#argument1> :Устройство_var ;
+                                                                  <http://www.w3.org/2003/11/swrl#argument2> :Мощность_var
+                                                                ] ;
+                                                      rdf:rest [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                                                 rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#DatavaluedPropertyAtom> ;
+                                                                             <http://www.w3.org/2003/11/swrl#propertyPredicate> :часы_работы_в_день ;
+                                                                             <http://www.w3.org/2003/11/swrl#argument1> :Устройство_var ;
+                                                                             <http://www.w3.org/2003/11/swrl#argument2> :Часы_var
+                                                                           ] ;
+                                                                 rdf:rest [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                                                            rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#BuiltinAtom> ;
+                                                                                        <http://www.w3.org/2003/11/swrl#builtin> <http://www.w3.org/2003/11/swrlb#greaterThan> ;
+                                                                                        <http://www.w3.org/2003/11/swrl#arguments> [ rdf:type rdf:List ;
+                                                                                                                                     rdf:first :Мощность_var ;
+                                                                                                                                     rdf:rest [ rdf:type rdf:List ;
+                                                                                                                                                rdf:first 500 ;
+                                                                                                                                                rdf:rest rdf:nil
+                                                                                                                                              ]
+                                                                                                                                   ]
+                                                                                      ] ;
+                                                                            rdf:rest [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                                                                       rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#BuiltinAtom> ;
+                                                                                                   <http://www.w3.org/2003/11/swrl#builtin> <http://www.w3.org/2003/11/swrlb#greaterThan> ;
+                                                                                                   <http://www.w3.org/2003/11/swrl#arguments> [ rdf:type rdf:List ;
+                                                                                                                                                rdf:first :Часы_var ;
+                                                                                                                                                rdf:rest [ rdf:type rdf:List ;
+                                                                                                                                                           rdf:first 4 ;
+                                                                                                                                                           rdf:rest rdf:nil
+                                                                                                                                                         ]
+                                                                                                                                              ]
+                                                                                                 ] ;
+                                                                                       rdf:rest rdf:nil
+                                                                                     ]
+                                                                          ]
+                                                               ]
+                                                    ]
+                                         ] ;
+   <http://www.w3.org/2003/11/swrl#head> [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                           rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#ClassAtom> ;
+                                                       <http://www.w3.org/2003/11/swrl#classPredicate> :ЭнергоНеэффективноеУстройство ;
+                                                       <http://www.w3.org/2003/11/swrl#argument1> :Устройство_var
+                                                     ] ;
+                                           rdf:rest rdf:nil
+                                         ]
+ ] .
 
 ###  Generated by the OWL API (version 4.5.29.2024-05-13T12:11:03Z) https://github.com/owlcs/owlapi
